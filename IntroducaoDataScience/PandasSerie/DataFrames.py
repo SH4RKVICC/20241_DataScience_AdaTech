@@ -31,5 +31,4 @@ df.loc[mask]
 
 # Mudando valor de uma coluna;
 change = df['Preços'] == 40.2
-
 df.loc[change, 'Preço'] == 40.4 
