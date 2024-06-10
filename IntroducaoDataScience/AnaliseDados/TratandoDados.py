@@ -16,6 +16,7 @@ def limpa_preco(linha):
     linha['price'] = linha['price'].replace('\n', '')  # Remove quebras de linha
     linha['price'] = linha['price'].replace('/Mês ', '')  # Remove a indicação de preço mensal
     linha['price'] = linha['price'].replace('           ', '.')  # Substitui múltiplos espaços por um ponto
+    linha['price'] = linha['price'].replace('/Ano ', '')  # Realizando desafio!
     return linha
 
 # Aplicando a função limpa_preco em cada linha do DataFrame
@@ -25,7 +26,9 @@ df.apply(lambda x: limpa_preco(x), axis=1)  # axis=1 indica que a aplicação é
 def ajusta_alugueis(linha):
     linha['price'] = linha['price'].replace('.', '')  # Remove pontos dos valores
     preco = int(linha['price'])  # Converte o valor para inteiro
-    if preco < 10000:  # Se o valor for menor que 10.000
+    if '/Ano' in linha['price']:
+        preco = preco / 12
+    elif preco < 10000:  # Se o valor for menor que 10.000
         preco = preco * 200  # Multiplica o valor por 200
     linha['price'] = preco  # Atualiza o valor na coluna 'price'
     return linha
